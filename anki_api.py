@@ -20,15 +20,30 @@ def invoke(action, **params):
     return response['result']
 
 
-def add_card() -> bool:
-    deck_name = 'test2'
-    if check_desk(deck_name):
-        print('%s is exists' % (deck_name))
+def add_card(card_front: str, card_back: str, deck_name: str) -> bool:
+    # Существует ли колода
+    if check_deck(deck_name):
+        # Если существует
+        card_id = check_card(deck_name, card_front)
+        if card_id is None:
+            print('Creating card')
+            # Создать карточку
+            card_id = create_card(card_front, card_back, deck_name)
+        else:
+            print('Changing card')
+            # изменить карточку
+            card_id = change_card(card_id, card_front, card_back, deck_name)
     else:
+        # В ином случае
         if not create_deck(deck_name):
             print("error: can't creat deck")
             return False
-        print('Deck %s was created.' % (deck_name))
+
+        card_id = create_card(card_front, card_back, deck_name)
+
+    if card_id is None:
+        print("error: can't creat card")
+        return False
     return True
 
 
@@ -40,23 +55,20 @@ def create_deck(deck_name: str) -> bool:
         return False
 
 
-def check_desk(desk_name: str) -> bool:
+def check_deck(deck_name: str) -> bool:
     result = invoke('deckNames')
-    if desk_name in result:
+    if deck_name in result:
         return True
     return False
 
 
 def check_card(deck_name: str, card_front: str) -> int:
-    cardsId = invoke('findCards', query="deck:test1")
-    print(cardsId)
+    # Получаем id всех карт из колоды
+    cardsId = invoke('findCards', query="deck:%s" % deck_name)
     for card_id in cardsId:
+        # Получаем информацию о карте
         card = invoke('cardsInfo', cards=[card_id])
-        print(card)
         card = card[0]['fields']
-        print('Card %d' % card_id)
-        print('\tFront:', card['Front']['value'])
-        print('\tBack:', card['Back']['value'])
         if card_front == card['Front']['value']:
             return card_id
     return None
@@ -73,10 +85,13 @@ def create_card(card_front: str, card_back: str, deck_name: str) -> int:
         return None
 
 
+def change_card(card_id: int, card_front: str,
+                card_back: str, deck_name: str) -> bool:
+    pass
+
+
 def main():
-    add_card()
-#    check_card('test1', ' ')
-    create_card('new','card', 'test1')
+    add_card('test card 1234', 'aoeuhao', 'test3')
 
 
 if __name__ == '__main__':
