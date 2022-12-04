@@ -47,23 +47,24 @@ def check_desk(desk_name: str) -> bool:
     return False
 
 
-def check_card():
+def check_card(card_front: str) -> int:
     cardsId = invoke('findCards', query="deck:test2")
-    print(cardsId)
     for card_id in cardsId:
         card = invoke('cardsInfo', cards=[card_id])
         card = card[0]['fields']
         print('Card %d' % card_id)
         print('\tFront:', card['Front']['value'])
         print('\tBack:', card['Back']['value'])
-"""
-    res = invoke('cardsInfo', cards=cardsId)
-    for card in res:
-        card = card['fields']
-        print('Card:')
-        print('\tFront:', card['Front']['value'])
-        print('\tBack:', card['Back']['value'])
-        """
+        if card_front == card['Front']['value']:
+            return card_id
+    return None
+
+
+def create_card(card_front: str, card_back: str) -> int:
+    try:
+        # пиши тут
+    except:
+        return None
 
 
 def main():
@@ -71,6 +72,6 @@ def main():
     check_card()
 
 
-
 if __name__ == '__main__':
     main()
+
