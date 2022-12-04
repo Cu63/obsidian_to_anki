@@ -20,17 +20,35 @@ def invoke(action, **params):
     return response['result']
 
 
-def add_card():
-    # проверить существование колоды
-    # если 
-    pass
+def add_card() -> bool:
+    desk_name = 'test2'
+    if check_desk(desk_name):
+        print('%s is exists' % (desk_name))
+    else:
+        if not create_deck(desk_name):
+            print("error: can't creat deck")
+            return False
+        print('Deck %s was created.' % (desk_name))
+    return True
+
+
+def create_deck(deck_name: str) -> bool:
+    try:
+        invoke('createDeck', deck=deck_name)
+        return True
+    except:
+        return False
+
+
+def check_desk(desk_name: str) -> bool:
+    result = invoke('deckNames')
+    if desk_name in result:
+        return True
+    return False
 
 
 def main():
-    invoke('createDeck', deck='test1')
-    result = invoke('deckNames')
-    result = invoke('getDecks')
-    print('got list of decks: {}'.format(result))
+    add_card()
 
 
 if __name__ == '__main__':
