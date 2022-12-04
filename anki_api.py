@@ -21,14 +21,14 @@ def invoke(action, **params):
 
 
 def add_card() -> bool:
-    desk_name = 'test2'
-    if check_desk(desk_name):
-        print('%s is exists' % (desk_name))
+    deck_name = 'test1'
+    if check_desk(deck_name):
+        print('%s is exists' % deck_name)
     else:
-        if not create_deck(desk_name):
+        if not create_deck(deck_name):
             print("error: can't creat deck")
             return False
-        print('Deck %s was created.' % (desk_name))
+        print('Deck %s was created.' % deck_name)
     return True
 
 
@@ -40,9 +40,9 @@ def create_deck(deck_name: str) -> bool:
         return False
 
 
-def check_desk(desk_name: str) -> bool:
+def check_desk(deck_name: str) -> bool:
     result = invoke('deckNames')
-    if desk_name in result:
+    if deck_name in result:
         return True
     return False
 
@@ -60,16 +60,13 @@ def check_card(card_front: str) -> int:
     return None
 
 
-def create_card(card_front: str, card_back: str) -> int:
-    try:
-        # пиши тут
-    except:
-        return None
+def create_card() -> int:
+    res = invoke('addNotes', notes=[{"deckName": 'test1', "modelName": "1 Basic", "fields": {"Front": 'aaaa', "Back": 'bbb'}}])
+    return res
 
 
 def main():
-    add_card()
-    check_card()
+    create_card()
 
 
 if __name__ == '__main__':
