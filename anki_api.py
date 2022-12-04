@@ -21,14 +21,14 @@ def invoke(action, **params):
 
 
 def add_card() -> bool:
-    desk_name = 'test2'
-    if check_desk(desk_name):
-        print('%s is exists' % (desk_name))
+    deck_name = 'test2'
+    if check_desk(deck_name):
+        print('%s is exists' % (deck_name))
     else:
-        if not create_deck(desk_name):
+        if not create_deck(deck_name):
             print("error: can't creat deck")
             return False
-        print('Deck %s was created.' % (desk_name))
+        print('Deck %s was created.' % (deck_name))
     return True
 
 
@@ -47,10 +47,12 @@ def check_desk(desk_name: str) -> bool:
     return False
 
 
-def check_card(card_front: str) -> int:
-    cardsId = invoke('findCards', query="deck:test2")
+def check_card(deck_name: str, card_front: str) -> int:
+    cardsId = invoke('findCards', query="deck:test1")
+    print(cardsId)
     for card_id in cardsId:
         card = invoke('cardsInfo', cards=[card_id])
+        print(card)
         card = card[0]['fields']
         print('Card %d' % card_id)
         print('\tFront:', card['Front']['value'])
@@ -60,16 +62,21 @@ def check_card(card_front: str) -> int:
     return None
 
 
-def create_card(card_front: str, card_back: str) -> int:
+def create_card(card_front: str, card_back: str, deck_name: str) -> int:
     try:
-        # пиши тут
+        res = invoke('addNotes',
+                     notes=[{"deckName": deck_name, "modelName": "1 Basic",
+                     "fields": {"Front": card_front,
+                     "Back": card_back}}])
+        return res[0]
     except:
         return None
 
 
 def main():
     add_card()
-    check_card()
+#    check_card('test1', ' ')
+    create_card('new','card', 'test1')
 
 
 if __name__ == '__main__':
