@@ -32,7 +32,7 @@ def add_card(card_front: str, card_back: str, deck_name: str) -> bool:
         else:
             print('Changing card')
             # изменить карточку
-            card_id = change_card(card_id, card_front, card_back, deck_name)
+            card_id = change_card(card_id, card_front, card_back)
     else:
         # В ином случае
         if not create_deck(deck_name):
@@ -86,12 +86,19 @@ def create_card(card_front: str, card_back: str, deck_name: str) -> int:
 
 
 def change_card(card_id: int, card_front: str,
-                card_back: str, deck_name: str) -> bool:
-    pass
+                card_back: str) -> int:
+    try:
+        res = invoke('updateNoteFields',
+                notes=[{"id": card_id,
+                "fields": {"Front": card_front,
+                "Back": card_back}}])
+        return res[0]
+    except:
+        return None
 
 
 def main():
-    add_card('test card 1234', 'aoeuhao', 'test3')
+    add_card('test card 1234', 'change', 'test3')
 
 
 if __name__ == '__main__':
