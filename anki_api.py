@@ -92,7 +92,7 @@ def change_card(card_id: int, card_front: str,
                 notes=[{"id": card_id,
                 "fields": {"Front": card_front,
                 "Back": card_back}}])
-        return res[0]
+        return res['result'][0]
     except:
         return None
 
