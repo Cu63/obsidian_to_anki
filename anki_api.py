@@ -79,7 +79,7 @@ def create_card(card_front: str, card_back: str, deck_name: str) -> int:
         res = invoke('addNotes',
                      notes=[{"deckName": deck_name, "modelName": "1 Basic",
                      "fields": {"Front": card_front,
-                     "Back": card_back}}])
+                     "Back": card_back}})
         return res[0]
     except:
         return None
@@ -103,4 +103,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
