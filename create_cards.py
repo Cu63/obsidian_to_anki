@@ -27,6 +27,8 @@ def read_header(header: str) -> list[str]:
         l = line.translate(table)
         l = l.split('#')[0]
         decks.append(l)
+    if decks == []:
+        decks = ['Default']
     return decks
 
 
