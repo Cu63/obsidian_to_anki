@@ -22,23 +22,20 @@ def invoke(action, **params):
 
 
 def add_card(card_front: str, card_back: str, deck_name: str) -> bool:
-    # Существует ли колода
-    card_front = '%s \t\t\t\t%s' % (card_front,
+    # add hash to cards name to avoid dublicates
+    card_front = '%s         %s' % (card_front,
                  md5(deck_name.encode()).hexdigest()[:5])
+    # check deck by name in anki
     if check_deck(deck_name):
-        # Если существует
-        # card_front = md5(card_front)[:5] + card_front
+        # try to find card and get it's id from anki
         card_id = check_card(deck_name, card_front)
         if card_id is None:
             print('Creating card')
-            # Создать карточку
             card_id = create_card(card_front, card_back, deck_name)
         else:
             print('Changing card')
-            # изменить карточку
             card_id = change_card(card_id, card_front, card_back)
     else:
-        # В ином случае
         if not create_deck(deck_name):
             print("error: can't creat deck")
             return False
@@ -60,6 +57,7 @@ def create_deck(deck_name: str) -> bool:
         return False
 
 
+# Try to find deck in anki decks list
 def check_deck(deck_name: str) -> bool:
     result = invoke('deckNames')
     if deck_name in result:
@@ -67,12 +65,13 @@ def check_deck(deck_name: str) -> bool:
     return False
 
 
+# Try to find card id by front field in deck
 def check_card(deck_name: str, card_front: str) -> int:
-    # Получаем id всех карт из колоды
+    # get all cards ids from deck
     cardsId = invoke('findCards', query="deck:%s" % deck_name)
     print(cardsId)
     for card_id in cardsId:
-        # Получаем информацию о карте
+        # get card info and compare it searching card's fields
         card = invoke('cardsInfo', cards=[card_id])
         card = card[0]['fields']
         if card_front == card['Front']['value']:
@@ -108,7 +107,7 @@ def change_card(card_id: int, card_front: str,
 
 
 def main():
-    add_card('card', 'card', 'test3')
+    add_card('new card', 'card', 'test1')
     add_card('card', 'new field', 'test2')
 
 
