@@ -34,13 +34,13 @@ def add_card(card_front: str, card_back: str, deck_name: str) -> bool:
             card_id = create_card(card_front, card_back, deck_name)
         else:
             print('Changing card')
-            card_id = change_card(json_card, card_id)
+            card_id = change_card(card_id, card_front, card_back)
     else:
         if not create_deck(deck_name):
             print("error: can't creat deck")
             return False
 
-        card_id = create_card(json_card)
+        card_id = create_card(card_front, card_back, deck_name)
 
     if card_id is None:
         print("error: can't creat card")
@@ -78,10 +78,7 @@ def check_card(deck_name: str, card_front: str) -> int:
     return None
 
 
-def create_card(json_card: dict) -> int:
-    deck_name = json_card['deckName']
-    card_front = json_card['Front']
-    card_back = json_card['Back']
+def create_card(card_front: str, card_back: str, deck_name: str) -> int:
     try:
         print('Creating card')
         res = invoke('addNote',
@@ -95,9 +92,12 @@ def create_card(json_card: dict) -> int:
         return None
 
 
-def change_card(json_card: dict, card_id: int) -> int:
+def change_card(card_id: int, card_front: str,
+                card_back: str) -> int:
     try:
-        invoke('updateNoteFields', note={"id": card_id, "fields": json_card['fields']}
+        res = invoke('updateNoteFields',
+                note={"id": card_id, "fields": {"Front": card_front,
+                "Back": card_back}})
         return card_id
     except Exception as e:
         print(e)
