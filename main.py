@@ -10,7 +10,7 @@ def main():
             print(file)
             cards = create_cards(file)
             for card in cards:
-                add_card()
+                add_card(card)
 
 
 if __name__ == "__main__":
