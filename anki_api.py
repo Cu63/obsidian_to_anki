@@ -21,7 +21,8 @@ def invoke(action, **params):
     return response['result']
 
 
-def add_card(card_front: str, card_back: str, deck_name: str) -> bool:
+def add_card(json_card: dict) -> bool:
+
     # add hash to cards name to avoid dublicates
     card_front = '%s %s' % (card_front,
                  md5(deck_name.encode()).hexdigest()[:5])
