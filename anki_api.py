@@ -23,7 +23,7 @@ def invoke(action, **params):
 
 def add_card(card_front: str, card_back: str, deck_name: str) -> bool:
     # add hash to cards name to avoid dublicates
-    card_front = '%s         %s' % (card_front,
+    card_front = '%s %s' % (card_front,
                  md5(deck_name.encode()).hexdigest()[:5])
     # check deck by name in anki
     if check_deck(deck_name):
@@ -69,7 +69,6 @@ def check_deck(deck_name: str) -> bool:
 def check_card(deck_name: str, card_front: str) -> int:
     # get all cards ids from deck
     cardsId = invoke('findCards', query="deck:%s" % deck_name)
-    print(cardsId)
     for card_id in cardsId:
         # get card info and compare it searching card's fields
         card = invoke('cardsInfo', cards=[card_id])
@@ -101,13 +100,14 @@ def change_card(card_id: int, card_front: str,
                 "Back": card_back}})
         return card_id
     except Exception as e:
-        print(">", e)
+        print(e)
         print('error: changing card')
         return None
 
 
 def main():
-    add_card('new card', 'change', 'test1')
+    add_card('new card', 'caard', 'test1')
+    add_card('card', 'new field', 'test2')
 
 
 if __name__ == '__main__':
