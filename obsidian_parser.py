@@ -13,7 +13,7 @@ def get_cards(cards: list[str]) -> list[str]:
         if back == []:
             continue
         back = back[0]
-        json_cards.append({"Front": front, "Back": back})
+        json_cards.append({"card_front": front, "card_back": back})
     return json_cards
 
 
@@ -71,8 +71,10 @@ def create_cards(f_name: str) -> list(dict()):
     file.write(text)
     file.close()
     for deck in decks:
-        for field in fields:
-            cards.append({'fields': field, 'deckName': deck})
+        for f in fields:
+            cards.append({'card_front': f['card_front'],
+                          'card_back': f['card_back'],
+                          'deck_name': deck})
     return cards
 
 
