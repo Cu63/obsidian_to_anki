@@ -63,7 +63,8 @@ def create_cards(f_name: str) -> list(dict()):
     file.close()
     header, body = split_file(text)
     decks = read_header(header)
-    text = 'Status: #done\n%s' + text
+    text = 'Status: #toanki\n%s' % text
+    # text = 'Status: #done\n%s' % text
     file = open(f_name, 'w', encoding='utf-8')
     file.write(text)
     print(decks)
