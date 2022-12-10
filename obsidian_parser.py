@@ -48,7 +48,7 @@ def split_file(text: str):
 def create_cards(f_name: str) -> list(dict()):
     cards = []
 
-    file = open(f_name, 'r')
+    file = open(f_name, 'r', encoding='utf-8')
     if file is None:
         print("error: can't open file %s" % file)
         return cards
@@ -60,11 +60,13 @@ def create_cards(f_name: str) -> list(dict()):
         return cards
 
     text = file.read()
+    text = 'Status: #done'
     file.close()
     header, body = split_file(text)
     decks = read_header(header)
     print(decks)
     cards = get_cards(body)
+    print(cards)
 
     return cards
 
@@ -75,7 +77,6 @@ def main():
         if '.md' == file[-3:]:
             print(file)
             cards = create_cards(file)
-            print(cards)
 
     
 if __name__ == '__main__':
