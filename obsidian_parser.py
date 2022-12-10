@@ -77,6 +77,6 @@ def main():
             cards = create_cards(file)
             print(cards)
 
-    
+
 if __name__ == '__main__':
     main()

@@ -107,8 +107,7 @@ def change_card(card_id: int, card_front: str,
 
 
 def main():
-    add_card('new card', 'card', 'test1')
-    add_card('card', 'new field', 'test2')
+    add_card('new card', 'change', 'test1')
 
 
 if __name__ == '__main__':
