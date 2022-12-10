@@ -22,7 +22,9 @@ def invoke(action, **params):
 
 
 def add_card(json_card: dict) -> bool:
-
+    card_front = json_card['card_front']
+    card_back = json_card['card_back']
+    deck_name = json_card['deck_name']
     # add hash to cards name to avoid dublicates
     card_front = '%s %s' % (card_front,
                  md5(deck_name.encode()).hexdigest()[:5])
@@ -96,9 +98,9 @@ def create_card(card_front: str, card_back: str, deck_name: str) -> int:
 def change_card(card_id: int, card_front: str,
                 card_back: str) -> int:
     try:
-        res = invoke('updateNoteFields',
+        invoke('updateNoteFields',
                 note={"id": card_id, "fields": {"Front": card_front,
-                "Back": card_back}})
+                                                "Back": card_back}})
         return card_id
     except Exception as e:
         print(e)
