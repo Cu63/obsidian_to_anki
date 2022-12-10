@@ -60,13 +60,16 @@ def create_cards(f_name: str) -> list(dict()):
         return cards
 
     text = file.read()
-    text = 'Status: #done'
     file.close()
     header, body = split_file(text)
     decks = read_header(header)
+    text = 'Status: #done\n%s' + text
+    file = open(f_name, 'w', encoding='utf-8')
+    file.write(text)
     print(decks)
     cards = get_cards(body)
     print(cards)
+    file.close()
 
     return cards
 
