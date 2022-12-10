@@ -13,7 +13,7 @@ def get_cards(cards: list[str]) -> list[str]:
         if back == []:
             continue
         back = back[0]
-        json_cards.append({"fields": {"Front": front, "Back": back}})
+        json_cards.append({"Front": front, "Back": back})
     return json_cards
 
 
@@ -30,9 +30,9 @@ def read_header(header: str) -> list[str]:
         l = l.split('#')[0]
         if l in decks:
             continue
-        decks.append({'deckName': l})
+        decks.append(l)
     if decks == []:
-        decks = [{'deckName': 'Default'}]
+        decks = ['Default']
     return decks
 
 # split md file by separator '## '. First block is a header with status
@@ -63,15 +63,16 @@ def create_cards(f_name: str) -> list(dict()):
     file.close()
     header, body = split_file(text)
     decks = read_header(header)
+    fields = get_cards(body)
+
     text = 'Status: #toanki\n%s' % text
     # text = 'Status: #done\n%s' % text
     file = open(f_name, 'w', encoding='utf-8')
     file.write(text)
-    print(decks)
-    cards = get_cards(body)
-    print(cards)
     file.close()
-
+    for deck in decks:
+        for field in fields:
+            cards.append({'fields': field, 'deckName': deck})
     return cards
 
 
@@ -81,6 +82,7 @@ def main():
         if '.md' == file[-3:]:
             print(file)
             cards = create_cards(file)
+            print(cards)
 
 
 if __name__ == '__main__':
