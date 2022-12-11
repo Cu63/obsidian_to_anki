@@ -33,10 +33,8 @@ def add_card(json_card: dict) -> bool:
         # try to find card and get it's id from anki
         card_id = check_card(deck_name, card_front)
         if card_id is None:
-            print('Creating card')
             card_id = create_card(card_front, card_back, deck_name)
         else:
-            print('Changing card')
             card_id = change_card(card_id, card_front, card_back)
     else:
         if not create_deck(deck_name):
@@ -53,6 +51,7 @@ def add_card(json_card: dict) -> bool:
 
 def create_deck(deck_name: str) -> bool:
     try:
+        print(f'Create deck {deck_name}')
         invoke('createDeck', deck=deck_name)
         return True
     except Exception as e:
@@ -71,7 +70,8 @@ def check_deck(deck_name: str) -> bool:
 # Try to find card id by front field in deck
 def check_card(deck_name: str, card_front: str) -> int:
     # get all cards ids from deck
-    cardsId = invoke('findCards', query="deck:%s" % deck_name)
+    cardsId = invoke('findCards', query='deck:"%s"' % deck_name)
+    print(cardsId)
     for card_id in cardsId:
         # get card info and compare it searching card's fields
         card = invoke('cardsInfo', cards=[card_id])
@@ -91,7 +91,6 @@ def create_card(card_front: str, card_back: str, deck_name: str) -> int:
         return res
     except Exception as e:
         print(e)
-        print('error: creat card')
         return None
 
 

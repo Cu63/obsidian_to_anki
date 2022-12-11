@@ -6,12 +6,9 @@ Source:
 
 ## Card 1
 
-test text
+mod test text
 
 ## !Card 2
 ignored card
-
-## Card 3
-test text
 
 ## Blank card
