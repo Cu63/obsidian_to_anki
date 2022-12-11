@@ -4,8 +4,8 @@ import os
 
 
 def main():
-    path = '/Users/cube/notes/cards'
-    files = os.listdir('/Users/cube/notes/cards')
+    path = './test_cards/'
+    files = os.listdir(path)
     for file in files:
         if '.md' == file[-3:]:
             print(file)

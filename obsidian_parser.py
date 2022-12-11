@@ -65,7 +65,8 @@ def create_cards(f_name: str) -> list(dict()):
     decks = read_header(header)
     fields = get_cards(body)
 
-    text = 'Status: #done \n%s' % text
+    text = 'Status: #toanki \n%s' % text
+    # text = 'Status: #done \n%s' % text
     file = open(f_name, 'w', encoding='utf-8')
     file.write(text)
     file.close()
