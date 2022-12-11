@@ -1,6 +1,5 @@
 Status: #toanki 
 Source:
-	[[test deck 1#test]]
 	[[test deck 2#test]]
 	[[test deck 3]]
 

@@ -6,10 +6,12 @@ Source:
 
 ## Card 1
 
-test text
+test text change da
+- номер рас
+- номер два
 
 ## !Card 2
-ignored card
+ignored card2
 
 ## Card 3
 test text
