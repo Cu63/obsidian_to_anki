@@ -4,7 +4,19 @@ import os
 
 
 def main():
-    path = './test_cards/'
+    try:
+        file = open('.config', 'r')
+        path = file.readline().strip()
+        if not path.startswith('path='):
+            print('error: reading .config')
+            return
+        path = path[5:]
+        file.close()
+    except:
+        path = input('Write path to obsidian cards: ')
+        with open('.config', 'w') as f:
+            f.write(f'path={path}')
+
     files = os.listdir(path)
     for file in files:
         if '.md' == file[-3:]:

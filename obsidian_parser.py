@@ -4,7 +4,7 @@ import os
 # Parse raw commadn list and create json card form from them
 def get_cards(cards: list[str]) -> list[str]:
     json_cards = []
-    table = cards[0].maketrans({'\t': '', '[': '', ']': ''})
+    table = cards[0].maketrans({'[': '', ']': ''})
     for card in cards:
         if card.startswith('!'):
             continue
@@ -12,8 +12,7 @@ def get_cards(cards: list[str]) -> list[str]:
         front, *back = card.split('\n', 1)
         if back == []:
             continue
-        front = front.replace('\n', '<br>')
-        back = back[0]
+        back = back[0].replace('\n', '<br>')
         json_cards.append({"card_front": front, "card_back": back})
     return json_cards
 

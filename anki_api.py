@@ -71,7 +71,6 @@ def check_deck(deck_name: str) -> bool:
 def check_card(deck_name: str, card_front: str) -> int:
     # get all cards ids from deck
     cardsId = invoke('findCards', query='deck:"%s"' % deck_name)
-    print(cardsId)
     for card_id in cardsId:
         # get card info and compare it searching card's fields
         card = invoke('cardsInfo', cards=[card_id])
@@ -97,9 +96,14 @@ def create_card(card_front: str, card_back: str, deck_name: str) -> int:
 def change_card(card_id: int, card_front: str,
                 card_back: str) -> int:
     try:
+        card = invoke('cardsInfo', cards=[card_id])
+        card = card[0]['fields']
+        if card_back == card['Back']['value']:
+            return card_id
         invoke('updateNoteFields',
                 note={"id": card_id, "fields": {"Front": card_front,
                                                 "Back": card_back}})
+        invoke('relearnCards', cards=[card_id])
         return card_id
     except Exception as e:
         print(e)

@@ -1,6 +1,5 @@
 Status: #toanki 
 Source:
-	[[test deck 1#test]]
 	[[test deck 2#test]]
 	[[test deck 3]]
 
@@ -11,4 +10,8 @@ mod test text
 ## !Card 2
 ignored card
 
-## Blank card
+## code dest
+> aeuaou
+>   aeuaou
+>       aeuaou
+> aeuaou
