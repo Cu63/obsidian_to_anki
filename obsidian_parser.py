@@ -4,7 +4,7 @@ import os
 # Parse raw commadn list and create json card form from them
 def get_cards(cards: list[str]) -> list[str]:
     json_cards = []
-    table = cards[1].maketrans({'\t': '', '[': '', ']': ''})
+    table = cards[0].maketrans({'\t': '', '[': '', ']': ''})
     for card in cards:
         if card.startswith('!'):
             continue
@@ -54,7 +54,7 @@ def create_cards(f_name: str) -> list(dict()):
         return cards
 
     text = file.readline()
-    if text != 'Status: #toanki\n':
+    if text != 'Status: #toanki \n':
         print('Card is already in deck.')
         file.close()
         return cards
@@ -65,8 +65,7 @@ def create_cards(f_name: str) -> list(dict()):
     decks = read_header(header)
     fields = get_cards(body)
 
-    text = 'Status: #toanki\n%s' % text
-    # text = 'Status: #done\n%s' % text
+    text = 'Status: #done \n%s' % text
     file = open(f_name, 'w', encoding='utf-8')
     file.write(text)
     file.close()
