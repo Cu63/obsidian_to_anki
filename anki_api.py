@@ -108,8 +108,11 @@ def change_card(card_id: int, card_front: str,
 
 
 def main():
-    add_card('new card', 'caard', 'test1')
-    add_card('card', 'new field', 'test2')
+    cardsId = invoke('findCards', query='deck:"test deck 1"')
+    print(cardsId)
+    card = invoke('cardsInfo', cards=cardsId)[0]
+    for c in card:
+        print(c, card[c])
 
 
 if __name__ == '__main__':

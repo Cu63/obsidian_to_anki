@@ -12,6 +12,7 @@ def get_cards(cards: list[str]) -> list[str]:
         front, *back = card.split('\n', 1)
         if back == []:
             continue
+        front = front.replace('\n', '<br>')
         back = back[0]
         json_cards.append({"card_front": front, "card_back": back})
     return json_cards

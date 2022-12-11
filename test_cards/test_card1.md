@@ -7,6 +7,9 @@ Source:
 ## Card 1
 
 test text
+- 1
+- 2
+- 3
 
 ## !Card 2
 ignored card
