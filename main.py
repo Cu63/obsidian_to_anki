@@ -32,10 +32,10 @@ def main():
                 f.write('__pycache__\n')
                 f.write('.config\n')
                 update_card_style()
-        elif sys.argv[1] == '--test' or sys.argv[1] == '-t':
+        elif sys.argv[1] in ('--test', '-t'):
             path = './test_cards'
             test = True
-        elif sys.argv[1] == '--help' or sys.argv[1] == '-h':
+        elif sys.argv[1] in ('--help', '-h'):
             print('\t <--test/-t>="test program')
             print('\t <--path/-p>="path to cards"')
             print('\t <--help/-h>="for help"')
