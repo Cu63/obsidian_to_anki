@@ -4,7 +4,7 @@ import os
 # Parse raw commadn list and create json card form from them
 def get_cards(cards: list[str]) -> list[str]:
     json_cards = []
-    table = cards[0].maketrans({'[': '', ']': ''})
+    table = cards[0].maketrans({'[': '', ']': '', ' ': '&nbsp;'})
     for card in cards:
         if card.startswith('!'):
             continue
@@ -12,7 +12,14 @@ def get_cards(cards: list[str]) -> list[str]:
         front, *back = card.split('\n', 1)
         if back == []:
             continue
-        back = back[0].replace('\n', '<br>')
+        # back = back[0].replace('\n', '<br>')
+        back = back[0].split('\n')
+        for i in range(len(back)):
+            if back[i].startswith('>'):
+                back[i] = back[i][1:]
+        back = '<br>'.join(back)
+        back = back.replace('\t', '&nbsp;' * 4)
+        
         json_cards.append({"card_front": front, "card_back": back})
     return json_cards
 
@@ -45,7 +52,7 @@ def split_file(text: str):
     return header, body
 
 # Read md file and get cards from it
-def create_cards(f_name: str) -> list(dict(), test):
+def create_cards(f_name: str, test: bool) -> list(dict()):
     cards = []
 
     file = open(f_name, 'r', encoding='utf-8')
