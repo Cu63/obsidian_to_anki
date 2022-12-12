@@ -22,6 +22,7 @@ def get_path():
 
 
 def main():
+    test = False
     if len(sys.argv) == 2:
         if sys.argv[1].startswith('--path=') or sys.argv[1].startswith('-p='):
             with open('.config', 'w') as f:
@@ -29,6 +30,7 @@ def main():
                 f.write(f'path={path}')
         elif sys.argv[1] == '--test' or sys.argv[1] == '-t':
             path = './test_cards'
+            test = True
         elif sys.argv[1] == '--help' or sys.argv[1] == '-h':
             print('\t <--test/-t>="test program')
             print('\t <--path/-p>="path to cards"')
@@ -41,7 +43,7 @@ def main():
     for file in files:
         if '.md' == file[-3:]:
             print(file)
-            cards = create_cards('%s/%s' % (path,file))
+            cards = create_cards('%s/%s' % (path,file), test=test)
             for card in cards:
                 add_card(card)
 

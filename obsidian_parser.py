@@ -45,7 +45,7 @@ def split_file(text: str):
     return header, body
 
 # Read md file and get cards from it
-def create_cards(f_name: str) -> list(dict()):
+def create_cards(f_name: str) -> list(dict(), test):
     cards = []
 
     file = open(f_name, 'r', encoding='utf-8')
@@ -65,8 +65,10 @@ def create_cards(f_name: str) -> list(dict()):
     decks = read_header(header)
     fields = get_cards(body)
 
-    text = 'Status: #toanki \n%s' % text
-    # text = 'Status: #done \n%s' % text
+    if test:
+        text = 'Status: #toanki \n%s' % text
+    else:
+        text = 'Status: #done \n%s' % text
     file = open(f_name, 'w', encoding='utf-8')
     file.write(text)
     file.close()
