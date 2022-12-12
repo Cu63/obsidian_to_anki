@@ -28,6 +28,9 @@ def main():
             with open('.config', 'w') as f:
                 path = sys.argv[1].split("=", maxsplit=1)[1]
                 f.write(f'path={path}')
+            with open('.gitignore', 'w') as f:
+                f.write('__pycache__\n')
+                f.write('.config\n')
         elif sys.argv[1] == '--test' or sys.argv[1] == '-t':
             path = './test_cards'
             test = True
