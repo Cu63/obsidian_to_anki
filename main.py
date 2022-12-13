@@ -34,7 +34,8 @@ def main():
                 update_card_style()
         elif sys.argv[1] in ('--test', '-t'):
             path = './test_cards'
-            test = True
+            flag = 't'
+        elif sys.argv[1] in ('-u', '--update'):
         elif sys.argv[1] in ('--help', '-h'):
             print('\t <--test/-t>="test program')
             print('\t <--path/-p>="path to cards"')
@@ -47,9 +48,9 @@ def main():
     for file in files:
         if '.md' == file[-3:]:
             print(file)
-            cards = create_cards('%s/%s' % (path,file), test=test)
+            cards = create_cards('%s/%s' % (path,file), flag=flag)
             for card in cards:
-                add_card(card)
+                add_card(card, flag)
 
 
 if __name__ == "__main__":

@@ -21,7 +21,7 @@ def invoke(action, **params):
     return response['result']
 
 
-def add_card(json_card: dict) -> bool:
+def add_card(json_card: dict, flag) -> bool:
     card_front = json_card['card_front']
     card_back = json_card['card_back']
     deck_name = json_card['deck_name']
@@ -35,7 +35,7 @@ def add_card(json_card: dict) -> bool:
         if card_id is None:
             card_id = create_card(card_front, card_back, deck_name)
         else:
-            card_id = change_card(card_id, card_front, card_back)
+            card_id = change_card(card_id, card_front, card_back, flag)
     else:
         if not create_deck(deck_name):
             print("error: can't creat deck")
@@ -93,7 +93,7 @@ def create_card(card_front: str, card_back: str, deck_name: str) -> int:
 
 
 def change_card(card_id: int, card_front: str,
-                card_back: str) -> int:
+                card_back: str, flag: str) -> int:
     try:
         card = invoke('cardsInfo', cards=[card_id])
         card = card[0]['fields']
@@ -102,8 +102,8 @@ def change_card(card_id: int, card_front: str,
         invoke('updateNoteFields',
                 note={"id": card_id,
                       "fields": {"Front": card_front, "Back": card_back}})
-
-        invoke('relearnCards', cards=[card_id])
+        if flag not it ('t', 'u'):
+            invoke('relearnCards', cards=[card_id])
         return card_id
     except Exception as e:
         print(e)
