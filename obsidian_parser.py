@@ -72,7 +72,7 @@ def create_cards(f_name: str, flag: str) -> list(dict()):
     decks = read_header(header)
     fields = get_cards(body)
 
-    if test == t:
+    if flag == 't':
         text = 'Status: #toanki \n%s' % text
     else:
         text = 'Status: #done \n%s' % text

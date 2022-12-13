@@ -4,8 +4,7 @@ Source:
 	[[test deck 2#test]]
 
 ## Card 1
-
-test text
+upgraded
 >1234
 >	123
 >      123

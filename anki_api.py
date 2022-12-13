@@ -102,7 +102,7 @@ def change_card(card_id: int, card_front: str,
         invoke('updateNoteFields',
                 note={"id": card_id,
                       "fields": {"Front": card_front, "Back": card_back}})
-        if flag not it ('t', 'u'):
+        if flag not in ('t', 'u'):
             invoke('relearnCards', cards=[card_id])
         return card_id
     except Exception as e:
