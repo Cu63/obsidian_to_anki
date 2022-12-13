@@ -26,7 +26,7 @@ def add_card(json_card: dict) -> bool:
     card_back = json_card['card_back']
     deck_name = json_card['deck_name']
     # add hash to cards name to avoid dublicates
-    card_front = '%s %s' % (card_front,
+    card_front = '%s<nobr class="hash">%s</nobr>' % (card_front,
                  md5(deck_name.encode()).hexdigest()[:5])
     # check deck by name in anki
     if check_deck(deck_name):
@@ -85,8 +85,7 @@ def create_card(card_front: str, card_back: str, deck_name: str) -> int:
         print('Creating card')
         res = invoke('addNote',
                      note={"deckName": deck_name, "modelName": "1 Basic",
-                     "fields": {"Front": card_front,
-                     "Back": card_back}})
+                     "fields": {"Front": card_front, "Back": card_back}})
         return res
     except Exception as e:
         print(e)
@@ -101,10 +100,10 @@ def change_card(card_id: int, card_front: str,
         card = card[0]['fields']
         if card_back == card['Back']['value']:
             return card_id
-        card_back = f'"{card_back}"'
         invoke('updateNoteFields',
-                note={"id": card_id, "fields": {"Front": card_front,
-                                                "Back": card_back}})
+                note={"id": card_id,
+                      "fields": {"Front": card_front, "Back": card_back}})
+
         invoke('relearnCards', cards=[card_id])
         return card_id
     except Exception as e:
@@ -112,11 +111,27 @@ def change_card(card_id: int, card_front: str,
         print('error: changing card')
         return None
 
+def update_card_style():
+    invoke('updateModelStyling', model={'name': '1 Basic', "css":
+    """.card {
+    font-family: arial;
+    font-size: 20px;
+    text-align: left;
+    color: black;
+    background-color: white;
+    }
+    .hash { color: rgba(0,0,0,0)}
+                                        """})
+
 
 def main():
-    add_card('new card', 'caard', 'test1')
-    add_card('card', 'new field', 'test2')
-
+    cardsId = invoke('findCards', query='deck:"test deck 1"')
+    update_card_style()
+    print(cardsId)
+    card = invoke('cardsInfo', cards=cardsId)[0]
+    print(card['answer'])
+    for c in card:
+        print(c, card[c])
 
 if __name__ == '__main__':
     main()
