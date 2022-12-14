@@ -12,11 +12,28 @@ def get_cards(cards: list[str]) -> list[str]:
         front, *back = card.split('\n', 1)
         if back == []:
             continue
-        # back = back[0].replace('\n', '<br>')
+        # задаёт разметку для кода и списков в карточках
         back = back[0].split('\n')
-        for i in range(len(back)):
-            if back[i].startswith('>'):
-                back[i] = back[i][1:]
+        if back[0].startswith('>'):
+            back[0] = "<dl class='code'><br><dt>%s</dt>" % back[0][1:]
+        for i in range(1, len(back)):
+            if back[i].startswith('>') and not back[i-1].startswith('<d'):
+                back[i] = "<dl class='code'><br><dt>%s</dt>" % back[i][1:]
+            elif back[i].startswith('>') and back[i-1].startswith('<d'):
+                back[i] = "<dt>%s</dt>" % back[i][1:]
+            elif not back[i].startswith('>') and back[i-1].startswith('<d'):
+                back[i] = "</dl><br>%s" % back[i]
+            elif back[i].startswith('- ') and not back[i-1].startswith('<l'):
+                back[i] = "<ul class='list'><br><li>%s</li>" % back[i][1:]
+            elif back[i].startswith('-') and back[i-1].startswith('<l'):
+                back[i] = "<li>%s</li>" % back[i][1:]
+            elif not back[i].startswith('-') and back[i-1].startswith('<l'):
+                back[i] = "</ul><br>%s" % back[i]
+        if back[-1].startswith('<dt>'):
+            back[-1] = "%s<br></dt>" % back[-1]
+        elif back[-1].startswith('<li>'):
+            back[-1] = "%s<br></li>" % back[-1]
+
         back = '<br>'.join(back)
         back = back.replace('\t', '&nbsp;' * 4)
         
@@ -86,7 +103,13 @@ def create_cards(f_name: str, test: bool) -> list(dict()):
                           'deck_name': deck})
     return cards
 
+def main():
+    with open('./test_cards/test_card1.md') as file:
+        file.readline()
+        text = file.read()
+    print(get_cards([text]))
 
+'''
 def main():
     files = os.listdir('.')
     for file in files:
@@ -94,7 +117,7 @@ def main():
             print(file)
             cards = create_cards(file)
             print(cards)
-
+'''
 
 if __name__ == '__main__':
     main()

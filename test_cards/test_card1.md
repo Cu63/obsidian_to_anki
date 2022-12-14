@@ -1,4 +1,4 @@
-Status: #toanki 
+Status: #done 
 Source:
 	[[test deck 1#test]]
 	[[test deck 2#test]]
@@ -6,15 +6,12 @@ Source:
 ## Card 1
 
 test text
->1234
->	123
->      123
->	123
+>code1
+>	code2
+>      code3
+>	code4
 
-## !Card 2
-ignored card
-
-## Card 3
-test text
-
-## Blank card
+- 1234
+- 12314
+- 12
+- sdfg

@@ -1,4 +1,4 @@
-Status: #toanki 
+Status: #done 
 Source:
 	[[test deck 2]]
 
