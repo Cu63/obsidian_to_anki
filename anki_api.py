@@ -112,16 +112,9 @@ def change_card(card_id: int, card_front: str,
         return None
 
 def update_card_style():
-    invoke('updateModelStyling', model={'name': '1 Basic', "css":
-    """.card {
-    font-family: arial;
-    font-size: 20px;
-    text-align: left;
-    color: black;
-    background-color: white;
-    }
-    .hash { color: rgba(0,0,0,0)}
-                                        """})
+    with open('obsidian.css') as f:
+        css = f.read()
+    invoke('updateModelStyling', model={'name': '1 Basic', "css": css})
 
 
 def main():

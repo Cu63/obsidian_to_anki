@@ -1,0 +1,33 @@
+.card {
+    font-family: arial;
+    font-size: 20px;
+    text-align: left;
+    color: black;
+    background-color: white;
+}
+.hash { color: rgba(0,0,0,0)}
+
+.list {
+    font-family: arial;
+    font-size: 20px;
+    background-color: rgb(40, 40, 40);
+    color: rgb(217,217,217);
+    border: 1px solid;
+    margin-left: auto;
+    margin-right: auto;
+    margin: 10%;
+    padding: 5%;
+}
+
+.code {
+    font-family: arial;
+    font-size: 20px;
+    background-color: rgb(40, 40, 40);
+    color: rgb(217,217,217);
+    padding-left: 10px;
+    border: 1px solid;
+    margin-left: auto;
+    margin-right: auto;
+    margin: 10%;
+    padding: 5%;
+}
