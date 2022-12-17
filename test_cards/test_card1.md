@@ -1,4 +1,4 @@
-Status: #done
+9b3b161a6f2a2b400cca68369a0ea09e
 Source:
 	[[test deck 1#test]]
 	[[test deck 2#test]]
