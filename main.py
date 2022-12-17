@@ -37,6 +37,7 @@ def main():
             flag = 't'
         elif sys.argv[1] in ('-u', '--update'):
             flag = 'u'
+            path = get_path()
         elif sys.argv[1] in ('--help', '-h'):
             print('\t <--test/-t>="test program')
             print('\t <--path/-p>="path to cards"')
