@@ -78,10 +78,10 @@ def create_cards(f_name: str, flag: str) -> list(dict()):
         print("error: can't open file %s" % file)
         return cards
 
-    hash_ = file.readline()
+    hash_ = file.readline()[:-1]
     text = file.read()
-    # calc_hash =
-    if text != 'Status: #toanki \n':
+    calc_hash = md5(text.encode()).hexdigest()
+    if hash_ == calc_hash:
         print('File is already in deck.')
         file.close()
         return cards
@@ -92,9 +92,9 @@ def create_cards(f_name: str, flag: str) -> list(dict()):
     fields = get_cards(body)
 
     if flag == 't':
-        text = 'Status: #toanki \n%s' % text
+        text = '%s\n%s' % (hash_, text)
     else:
-        text = 'Status: #done \n%s' % text
+        text = '%s\n%s' % (calc_hash, text)
     file = open(f_name, 'w', encoding='utf-8')
     file.write(text)
     file.close()

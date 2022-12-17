@@ -92,7 +92,6 @@ def create_card(card_front: str, card_back: str, deck_name: str) -> int:
         return None
 
 
-
 def change_card(card_id: int, card_front: str,
                 card_back: str, flag: str) -> int:
     try:
@@ -110,6 +109,7 @@ def change_card(card_id: int, card_front: str,
         print(e)
         print('error: changing card')
         return None
+
 
 def update_card_style():
     invoke('updateModelStyling', model={'name': '1 Basic', "css":
