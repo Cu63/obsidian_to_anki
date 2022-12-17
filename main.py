@@ -22,7 +22,7 @@ def get_path():
 
 
 def main():
-    test = False
+    flag = False
     if len(sys.argv) == 2:
         if sys.argv[1].startswith('--path=') or sys.argv[1].startswith('-p='):
             with open('.config', 'w') as f:

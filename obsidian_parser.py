@@ -1,4 +1,5 @@
 import os
+from hashlib import md5
 
 
 # Parse raw commadn list and create json card form from them
@@ -77,13 +78,14 @@ def create_cards(f_name: str, flag: str) -> list(dict()):
         print("error: can't open file %s" % file)
         return cards
 
-    text = file.readline()
+    hash_ = file.readline()
+    text = file.read()
+    # calc_hash =
     if text != 'Status: #toanki \n':
-        print('Card is already in deck.')
+        print('File is already in deck.')
         file.close()
         return cards
 
-    text = file.read()
     file.close()
     header, body = split_file(text)
     decks = read_header(header)
