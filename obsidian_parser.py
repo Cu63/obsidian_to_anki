@@ -46,7 +46,7 @@ def get_cards(cards: list[str]) -> list[str]:
 def read_header(header: str) -> list[str]:
     decks = []
     lines = header.split('\n')
-    if lines[0] != 'Source:':
+    if 'Source:' not in lines[0]:
         print('error: wrong header format')
         return None
     table = lines[1].maketrans({'\t': '', '[': '', ']': ''})
