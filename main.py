@@ -20,7 +20,6 @@ def get_path():
     return path
 
 
-
 def main():
     flag = False
     if len(sys.argv) == 2:
