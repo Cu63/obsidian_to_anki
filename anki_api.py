@@ -102,6 +102,7 @@ def change_card(card_id: int, card_front: str,
             return card_id
         invoke('updateNoteFields',
                 note={"id": card_id,
+                      "modelName": "obsidian_notes",
                       "fields": {"Front": card_front, "Back": card_back}})
         if flag not in ('t', 'u'):
             invoke('relearnCards', cards=[card_id])
@@ -125,7 +126,8 @@ def update_card_style():
         css = f.read()
     invoke('updateModelStyling', model={'name': 'obsidian_notes', "css": css})
 
-def style_chech():
+
+def style_check():
     model_list = invoke('modelNames')
     if 'obsidian_notes' not in model_list:
         create_model()
@@ -133,6 +135,7 @@ def style_chech():
 
 
 def main():
+    style_check()
     '''
     cardsId = invoke('findCards', query='deck:"test deck 1"')
     update_card_style()
