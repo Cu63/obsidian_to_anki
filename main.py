@@ -1,4 +1,4 @@
-from anki_api import add_card, update_card_style
+from anki_api import add_card, style_check
 from obsidian_parser import create_cards
 import os
 import sys
@@ -30,13 +30,15 @@ def main():
             with open('.gitignore', 'w') as f:
                 f.write('__pycache__\n')
                 f.write('.config\n')
-                update_card_style()
+                style_check()
         elif sys.argv[1] in ('--test', '-t'):
             path = './test_cards'
             flag = 't'
+            style_check()
         elif sys.argv[1] in ('-u', '--update'):
             flag = 'u'
             path = get_path()
+            style_check()
         elif sys.argv[1] in ('--help', '-h'):
             print('\t <--test/-t>="test program')
             print('\t <--path/-p>="path to cards"')

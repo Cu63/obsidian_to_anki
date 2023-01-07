@@ -85,7 +85,7 @@ def create_card(card_front: str, card_back: str, deck_name: str) -> int:
     try:
         print('Creating card')
         res = invoke('addNote',
-                     note={"deckName": deck_name, "modelName": "1 Basic",
+                     note={"deckName": deck_name, "modelName": "obsidian_notes",
                      "fields": {"Front": card_front, "Back": card_back}})
         return res
     except Exception as e:
@@ -102,6 +102,7 @@ def change_card(card_id: int, card_front: str,
             return card_id
         invoke('updateNoteFields',
                 note={"id": card_id,
+                      "modelName": "obsidian_notes",
                       "fields": {"Front": card_front, "Back": card_back}})
         if flag not in ('t', 'u'):
             invoke('relearnCards', cards=[card_id])
@@ -112,13 +113,29 @@ def change_card(card_id: int, card_front: str,
         return None
 
 
+def create_model():
+    invoke('createModel', modelName='obsidian_notes',
+           inOrderFields=["Front", "Back"],
+           cardTemplates=[{'Name': 'Card 1',
+                           'Front': '{{Front}}',
+                           'Back': '{{Back}}'}])
+
+
 def update_card_style():
-    with open('obsidian.css') as f:
+    with open('style/obsidian.css') as f:
         css = f.read()
-    invoke('updateModelStyling', model={'name': '1 Basic', "css": css})
+    invoke('updateModelStyling', model={'name': 'obsidian_notes', "css": css})
+
+
+def style_check():
+    model_list = invoke('modelNames')
+    if 'obsidian_notes' not in model_list:
+        create_model()
+    update_card_style()
 
 
 def main():
+    style_check()
     cardsId = invoke('findCards', query='deck:"test deck 1"')
     update_card_style()
 
