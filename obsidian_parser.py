@@ -9,7 +9,10 @@ def create_html_list(line_num, lines, card, tag='dl'):
         line_num += 1
         card.append("<dl class='code'>")
         while lines[line_num] != "'''":
-            card.append(f'<dt>{lines[line_num]}</dt>')
+            line = lines[line_num]
+            line = line.replace('\t', '&nbsp;' * 4)
+            line = line.replace(' ' * 4, '&nbsp;' * 4)
+            card.append(f'<dt>{line}</dt>')
             line_num += 1
         card.append("</dl>")
         line_num += 1
@@ -19,7 +22,8 @@ def create_html_list(line_num, lines, card, tag='dl'):
         while (line_num < len(lines) and lines[line_num][shift:]
                .startswith(list_tags[tag])):
             line = lines[line_num][shift + 2:]
-            line = line.strip().replace('\\', '')
+            line = line.strip().replace('\\', '').replace('\t', '&nbsp;' * 4)
+            line = line.replace('    ', 'nbsp;' * 4)
             line = f'<li>{line}'
             card.append(line)
             line_num += 1
@@ -58,14 +62,14 @@ def md_to_html(md_text):
         elif re.search(r'[ \t]*[0-9]+\. ', back[i]) is not None:
             i = create_html_list(i, back, card, tag='ol')
         else:
-            line = back[i].replace('\\', '')
+            line = back[i].replace('\t', '&nbsp;' * 4)
+            line = line.replace('    ', 'nbsp;' * 4)
+            line = line.replace('\\', '')
             card.append(line)
             i += 1
 
     card.append('</p>')
     card = '<br>'.join(card)
-    card = card.replace('\t', '&nbsp;' * 4)
-    card = card.replace(' ', '&nbsp;')
 
     return card
 
@@ -79,10 +83,10 @@ def get_cards(cards: list[str]) -> list[str]:
         if card.startswith('!'):
             continue
         card = card.strip().translate(table)
-        front, back = card.split('\n', 1)
-        back = back.strip()
+        front, *back = card.split('\n', 1)
         if back == []:
             continue
+        back = back[0].strip()
         # задаёт разметку для кода и списков в карточках
         back = md_to_html(back)
         
@@ -152,7 +156,7 @@ def create_cards(f_name: str, flag: str) -> list(dict()):
 
 
 def main():
-    with open('./test_cards/test_card1.md') as file:
+    with open('./test_cards/test_card2.md') as file:
         file.readline()
         text = file.read()
         _, body = split_file(text)
