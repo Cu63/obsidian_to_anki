@@ -1,16 +1,18 @@
-d7031a6f573d4e2b9e58139169ec4ab4
+118509c709b9c3f4bef91b871633432d
 Source:
 	[[test deck 2]]
 
-## Card 1
+## Paragraph check
 
-mod test text
+First paragraph
 
-## !Card 2
+Second paragraph
+
+## !Ignored card
 ignored card
 
 ## code dest
-> aeuaou
->	aeuaou
->		aeuaou
-> 	aeuaou
+aeuaou
+	aeuaou
+		aeuaou
+	aeuaou

@@ -1,39 +1,73 @@
 import os
+import re
 from hashlib import md5
 
 
+def create_html_list(line_num, lines, card, tag='dl'):
+    list_tags = {'ul': '- ', 'ol': '. '}
+    if tag == 'dl':
+        line_num += 1
+        card.append("<dl class='code'>")
+        while lines[line_num] != "'''":
+            card.append(f'<dt>{lines[line_num]}</dt>')
+            line_num += 1
+        card.append("</dl>")
+        line_num += 1
+    elif tag in list_tags:
+        card.append(f"<{tag} class='list'>")
+        shift = lines[line_num].find(list_tags[tag])
+        while (line_num < len(lines) and lines[line_num][shift:]
+               .startswith(list_tags[tag])):
+            line = lines[line_num][shift + 2:]
+            line = line.strip().replace('\\', '')
+            line = f'<li>{line}'
+            card.append(line)
+            line_num += 1
+            if (line_num < len(lines) and not lines[line_num][shift:]
+               .startswith(list_tags[tag])):
+                if re.search(r'[ \t]*- ',
+                             lines[line_num][shift:]) is not None:
+                    line_num = create_html_list(line_num, lines,
+                                                card, tag='ul')
+                elif re.search(r'[ \t]*[0-9]+\. ',
+                               lines[line_num][shift:]) is not None:
+                    line_num = create_html_list(line_num, lines,
+                                                 card, tag='ol')
+            card.append('</li>')
+        card.append(f'</{tag}>')
+
+    return line_num
+
+
 def md_to_html(md_text):
-    print(md_text)
-    back = md_text[0].split('\n')
-    for line in back:
-        print(line)
+    card = []
+    back = md_text.split('\n')
+    i = 0
+    while i < len(back):
+        if len(card) == 0 or card[-1] == '</p>':
+            card.append('<p>')
+        if back[i].strip() == '':
+            card.append('</p>')
+            i += 1
+            continue
+        if back[i] == "'''":
+            i = create_html_list(i, back, card)
+            continue
+        if re.search(r'[ \t]*- ', back[i]) is not None:
+            i = create_html_list(i, back, card, tag='ul')
+        elif re.search(r'[ \t]*[0-9]+\. ', back[i]) is not None:
+            i = create_html_list(i, back, card, tag='ol')
+        else:
+            line = back[i].replace('\\', '')
+            card.append(line)
+            i += 1
 
-    '''
-    if back[0].startswith('>'):
-        back[0] = "<dl class='code'><br><dt>%s</dt>" % back[0][1:]
-    for i in range(1, len(back)):
-        if back[i].startswith('>') and not back[i-1].startswith('<d'):
-            back[i] = "<dl class='code'><br><dt>%s</dt>" % back[i][1:]
-        elif back[i].startswith('>') and back[i-1].startswith('<d'):
-            back[i] = "<dt>%s</dt>" % back[i][1:]
-        elif not back[i].startswith('>') and back[i-1].startswith('<d'):
-            back[i] = "</dl><br>%s" % back[i]
-        elif back[i].startswith('- ') and not back[i-1].startswith('<l'):
-            back[i] = "<ul class='list'><br><li>%s</li>" % back[i][1:]
-        elif back[i].startswith('-') and back[i-1].startswith('<l'):
-            back[i] = "<li>%s</li>" % back[i][1:]
-        elif not back[i].startswith('-') and back[i-1].startswith('<l'):
-            back[i] = "</ul><br>%s" % back[i]
-    if back[-1].startswith('<dt>'):
-        back[-1] = "%s<br></dt>" % back[-1]
-    elif back[-1].startswith('<li>'):
-        back[-1] = "%s<br></li>" % back[-1]
+    card.append('</p>')
+    card = '<br>'.join(card)
+    card = card.replace('\t', '&nbsp;' * 4)
+    card = card.replace(' ', '&nbsp;')
 
-    '''
-    back = '<br>'.join(back)
-    card_back = back.replace('\t', '&nbsp;' * 4)
-
-    return card_back
+    return card
 
 
 # Parse raw command list and create json card form from them
@@ -45,11 +79,12 @@ def get_cards(cards: list[str]) -> list[str]:
         if card.startswith('!'):
             continue
         card = card.strip().translate(table)
-        front, *back = card.split('\n', 1)
+        front, back = card.split('\n', 1)
+        back = back.strip()
         if back == []:
             continue
         # задаёт разметку для кода и списков в карточках
-        back = md_to_html(back[0])
+        back = md_to_html(back)
         
         json_cards.append({"card_front": front, "card_back": back})
     return json_cards

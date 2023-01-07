@@ -121,13 +121,7 @@ def update_card_style():
 def main():
     cardsId = invoke('findCards', query='deck:"test deck 1"')
     update_card_style()
-    '''
-    print(cardsId)
-    card = invoke('cardsInfo', cards=cardsId)[0]
-    print(card['answer'])
-    for c in card:
-        print(c, card[c])
-        '''
+
 
 if __name__ == '__main__':
     main()
