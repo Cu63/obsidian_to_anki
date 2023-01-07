@@ -1,33 +1,36 @@
 .card {
     font-family: arial;
     font-size: 20px;
-    text-align: left;
+    text-align: center;
     color: black;
     background-color: white;
+    margin-left: 10%;
+    margin-right: 10%;
+    
 }
 .hash { color: rgba(0,0,0,0)}
 
 .list {
     font-family: arial;
     font-size: 20px;
+    text-align: left;
     background-color: rgb(40, 40, 40);
     color: rgb(217,217,217);
     border: 1px solid;
-    margin-left: auto;
-    margin-right: auto;
-    margin: 10%;
-    padding: 5%;
+    margin-left: 10%;
+    margin-right: 10%;
+    line-height: 0.75;
 }
 
 .code {
     font-family: arial;
     font-size: 20px;
+    text-align: left;
     background-color: rgb(40, 40, 40);
     color: rgb(217,217,217);
     padding-left: 10px;
     border: 1px solid;
-    margin-left: auto;
-    margin-right: auto;
-    margin: 10%;
-    padding: 5%;
+    margin-left: 10%;
+    margin-right: 10%;
+    line-height: 0.75;
 }

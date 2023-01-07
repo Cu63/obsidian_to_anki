@@ -3,20 +3,20 @@ Source:
 	[[test deck 1#test]]
 	[[test deck 2#test]]
 
-## Card 1
+## Code sample
+'''
 12333333
->1234
->	123
->      123
->	123
+1234
+	123
+      123
+	123
+'''
 
-test text
->code1
->	code2
->      code3
->	code4
-
-- 1234
-- 12314
-- 12
-- sdfg
+## List sample
+1. 1
+2. 2
+3. 3
+    - 3.1
+    - 3.2
+    - 3.3
+4. 4
