@@ -94,21 +94,17 @@ def create_cards(f_name: str, flag: str) -> list(dict()):
 
     hash_ = file.readline()[:-1]
     text = file.read()
+    file.close()
     calc_hash = md5(text.encode()).hexdigest()
-    if hash_ == calc_hash:
+    if hash_ == calc_hash and flag not in ('u', 't'):
         print('File is already in deck.')
-        file.close()
         return cards
 
-    file.close()
     header, body = split_file(text)
     decks = read_header(header)
     fields = get_cards(body)
 
-    if flag == 't':
-        text = '%s\n%s' % (hash_, text)
-    else:
-        text = '%s\n%s' % (calc_hash, text)
+    text = '%s\n%s' % (calc_hash, text)
     file = open(f_name, 'w', encoding='utf-8')
     file.write(text)
     file.close()

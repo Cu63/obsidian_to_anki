@@ -41,6 +41,7 @@ def main():
             print('\t <--test/-t>="test program')
             print('\t <--path/-p>="path to cards"')
             print('\t <--help/-h>="for help"')
+            print('\t <--update/-u>="for update cards without reset progres"')
             return
     else:
         path = get_path()
