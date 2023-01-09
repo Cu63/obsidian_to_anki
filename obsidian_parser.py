@@ -8,7 +8,7 @@ def create_html_list(line_num, lines, card, tag='dl'):
     if tag == 'dl':
         line_num += 1
         card.append("<dl class='code'>")
-        while lines[line_num] != "'''":
+        while lines[line_num] != "```":
             line = lines[line_num]
             line = line.replace('\t', '&nbsp;' * 4)
             line = line.replace(' ' * 4, '&nbsp;' * 4)
@@ -29,11 +29,11 @@ def create_html_list(line_num, lines, card, tag='dl'):
             line_num += 1
             if (line_num < len(lines) and not lines[line_num][shift:]
                .startswith(list_tags[tag])):
-                if re.search(r'[ \t]*- ',
+                if re.match(r'[ \t]*- ',
                              lines[line_num][shift:]) is not None:
                     line_num = create_html_list(line_num, lines,
                                                 card, tag='ul')
-                elif re.search(r'[ \t]*[0-9]+\. ',
+                elif re.match(r'[ \t]*[0-9]+\. ',
                                lines[line_num][shift:]) is not None:
                     line_num = create_html_list(line_num, lines,
                                                  card, tag='ol')
@@ -54,12 +54,12 @@ def md_to_html(md_text):
             card.append('</p>')
             i += 1
             continue
-        if back[i] == "'''":
+        if back[i] == "```":
             i = create_html_list(i, back, card)
             continue
-        if re.search(r'[ \t]*- ', back[i]) is not None:
+        if re.match(r'[ \t]*- ', back[i]) is not None:
             i = create_html_list(i, back, card, tag='ul')
-        elif re.search(r'[ \t]*[0-9]+\. ', back[i]) is not None:
+        elif re.match(r'[ \t]*[0-9]+\. ', back[i]) is not None:
             i = create_html_list(i, back, card, tag='ol')
         else:
             line = back[i].replace('\t', '&nbsp;' * 4)
@@ -156,7 +156,7 @@ def create_cards(f_name: str, flag: str) -> list(dict()):
 
 
 def main():
-    with open('./test_cards/test_card2.md') as file:
+    with open('./test_cards/test_card1.md') as file:
         file.readline()
         text = file.read()
         _, body = split_file(text)

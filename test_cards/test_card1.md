@@ -1,17 +1,17 @@
-073ad3daae1e160b54e64263034a277a
+20d56e529bc328c69c3d04ea3c286dda
 Source:
 	[[test deck 1#test]]
 	[[test deck 2#test]]
 
 ## Code sample
 Co\de samp\le:
-'''
+```
 12333333
 1234
 	123
       123
 	123
-'''
+```
 end of code
 
 ## Numeric list
