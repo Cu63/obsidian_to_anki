@@ -91,8 +91,11 @@ def get_cards(cards: list[str]) -> list[str]:
         back = back[0].strip()
         # задаёт разметку для кода и списков в карточках
         back = md_to_html(back)
-        
-        json_cards.append({"card_front": front, "card_back": back})
+        if card.startswith('~'):
+            front = front[1:]
+            json_cards.append({"card_front": back, "card_back": front})
+        else:
+            json_cards.append({"card_front": front, "card_back": back})
     return json_cards
 
 

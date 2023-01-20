@@ -1,4 +1,4 @@
-from anki_api import add_card, style_check
+from anki_api import add_card, style_check, invoke
 from obsidian_parser import create_cards
 import os
 import sys
@@ -55,6 +55,7 @@ def main():
             cards = create_cards('%s/%s' % (path,file), flag=flag)
             for card in cards:
                 add_card(card, flag)
+    invoke('sync')
 
 
 if __name__ == "__main__":
