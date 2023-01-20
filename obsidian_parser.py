@@ -48,10 +48,12 @@ def md_to_html(md_text):
     back = md_text.split('\n')
     i = 0
     while i < len(back):
+        '''
         if len(card) == 0 or card[-1] == '</p>':
             card.append('<p>')
+        '''
         if back[i].strip() == '':
-            card.append('</p>')
+            # card.append('</p>')
             i += 1
             continue
         if back[i] == "```":
@@ -68,7 +70,7 @@ def md_to_html(md_text):
             card.append(line)
             i += 1
 
-    card.append('</p>')
+    # card.append('</p>')
     card = '<br>'.join(card)
 
     return card
