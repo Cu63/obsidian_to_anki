@@ -4,8 +4,8 @@
     text-align: center;
     color: black;
     background-color: white;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 3%;
+    margin-right: 3%;
     
 }
 .hash { color: rgba(0,0,0,0)}
@@ -16,11 +16,8 @@
     text-align: left;
     background-color: rgb(40, 40, 40);
     color: rgb(217,217,217);
-    /*
-    margin-left: 10%;
-    margin-right: 10%;
-    */
-    line-height: 0.75;
+    border: 1px solid;
+    line-height: 1;
 }
 
 .code {
@@ -31,7 +28,7 @@
     color: rgb(217,217,217);
     padding-left: 10px;
     border: 1px solid;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
     line-height: 0.75;
 }

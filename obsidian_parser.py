@@ -3,7 +3,7 @@ import re
 from hashlib import md5
 
 
-def create_html_list(line_num, lines, card, tag='dl'):
+def create_html_list(line_num, lines, card, tag='dl', isFirst=False):
     list_tags = {'ul': '- ', 'ol': '. '}
     if tag == 'dl':
         line_num += 1
@@ -17,7 +17,10 @@ def create_html_list(line_num, lines, card, tag='dl'):
         card.append("</dl>")
         line_num += 1
     elif tag in list_tags:
-        card.append(f"<{tag} class='list'>")
+        if isFirst:
+            card.append(f"<{tag} class='list'>")
+        else:
+            card.append(f"<{tag} class='list' style='border: 0px'>")
         shift = lines[line_num].find(list_tags[tag])
         while (line_num < len(lines) and lines[line_num][shift:]
                .startswith(list_tags[tag])):
@@ -60,9 +63,9 @@ def md_to_html(md_text):
             i = create_html_list(i, back, card)
             continue
         if re.match(r'[ \t]*- ', back[i]) is not None:
-            i = create_html_list(i, back, card, tag='ul')
+            i = create_html_list(i, back, card, tag='ul', isFirst=True)
         elif re.match(r'[ \t]*[0-9]+\. ', back[i]) is not None:
-            i = create_html_list(i, back, card, tag='ol')
+            i = create_html_list(i, back, card, tag='ol', isFirst=True)
         else:
             line = back[i].replace('\t', '&nbsp;' * 4)
             line = line.replace('    ', 'nbsp;' * 4)

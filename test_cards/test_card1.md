@@ -1,4 +1,4 @@
-20d56e529bc328c69c3d04ea3c286dda
+a0b3bdaaa6bfed9fa28309561b01c515
 Source:
 	[[test deck 1#test]]
 	[[test deck 2#test]]
@@ -39,8 +39,18 @@ Nested lists sample:
     - 3.3
 4. 4
 
+## ~Front
+
+back
+
 ## Test paragraphs
 
 First paragraph
 
 Second paragraph
+
+## LaTeX
+
+$$
+\frac{a}{b}
+$$
