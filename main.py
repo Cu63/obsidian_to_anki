@@ -2,6 +2,8 @@ from anki_api import add_card, style_check, invoke
 from obsidian_parser import create_cards
 import os
 import sys
+import threading
+from queue import Queue
 
 
 def get_path():
@@ -18,6 +20,14 @@ def get_path():
         with open('.config', 'w') as f:
             f.write(f'path={path}')
     return path
+
+def add_file_cards(files_queue, flag):
+    while not files_queue.empty():
+        file = files_queue.get()
+        print(file)
+        cards = create_cards(file, flag=flag)
+        for card in cards:
+            add_card(card, flag)
 
 
 def main():
@@ -49,12 +59,23 @@ def main():
         path = get_path()
 
     files = os.listdir(path)
+    files_queue = Queue()
     for file in files:
         if '.md' == file[-3:]:
+            files_queue.put(f'{path}/{file}')
+    for i in range(10):
+        print(f'Start thread {i + 1}')
+        file_thread = threading.Thread(target=add_file_cards,
+                                       args=(files_queue, flag))
+        file_thread.start()
+
+    '''
+    for file in files:
             print(file)
             cards = create_cards('%s/%s' % (path,file), flag=flag)
             for card in cards:
                 add_card(card, flag)
+    '''
     invoke('sync')
 
 
