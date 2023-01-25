@@ -46,6 +46,20 @@ def create_html_list(line_num, lines, card, tag='dl', isFirst=False):
     return line_num
 
 
+def create_latex(line_num, lines, card):
+    line_num += 1
+    latex_list = list()
+    latex_list.append('\\(')
+    while lines[line_num] != '$$':
+        latex_list.append(lines[line_num])
+        line_num += 1
+    latex_list.append('\\)')
+    latex_list = '\n'.join(latex_list)
+    card.append(latex_list)
+    line_num += 1
+    return line_num
+
+
 def md_to_html(md_text):
     card = []
     back = md_text.split('\n')
@@ -59,7 +73,10 @@ def md_to_html(md_text):
             # card.append('</p>')
             i += 1
             continue
-        if back[i] == "```":
+        if back[i].strip() == "$$":
+            i = create_latex(i, back, card)
+            continue
+        if back[i].strip() == "```":
             i = create_html_list(i, back, card)
             continue
         if re.match(r'[ \t]*- ', back[i]) is not None:
