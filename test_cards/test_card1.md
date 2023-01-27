@@ -52,5 +52,8 @@ Second paragraph
 ## LaTeX
 
 $$
-\frac{a}{b}
+\max(a,b)=\begin{cases}a 
+&\text{фывапролдже} 
+(a\geqq b)\b 
+&(a\lt b)\end{cases}
 $$

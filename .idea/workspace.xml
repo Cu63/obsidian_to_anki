@@ -30,7 +30,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.obsidian_parser">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="obsidian_to_anki" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -75,8 +75,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.obsidian_parser" />
+        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>

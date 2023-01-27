@@ -54,7 +54,8 @@ def create_latex(line_num, lines, card):
         latex_list.append(lines[line_num])
         line_num += 1
     latex_list.append('\\)')
-    latex_list = '\n'.join(latex_list)
+    #latex_list = '\n'.join(latex_list)
+    latex_list = ' '.join(latex_list)
     card.append(latex_list)
     line_num += 1
     return line_num
