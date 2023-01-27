@@ -64,6 +64,7 @@ def md_to_html(md_text):
     card = []
     back = md_text.split('\n')
     i = 0
+    table = back[0].maketrans({'[': '', ']': ''})
     while i < len(back):
         '''
         if len(card) == 0 or card[-1] == '</p>':
@@ -79,6 +80,7 @@ def md_to_html(md_text):
         if back[i].strip() == "```":
             i = create_html_list(i, back, card)
             continue
+        back[i] = back[i].translate(table)
         if re.match(r'[ \t]*- ', back[i]) is not None:
             i = create_html_list(i, back, card, tag='ul', isFirst=True)
         elif re.match(r'[ \t]*[0-9]+\. ', back[i]) is not None:
@@ -99,13 +101,14 @@ def md_to_html(md_text):
 # Parse raw command list and create json card form from them
 def get_cards(cards: list[str]) -> list[str]:
     json_cards = []
-    # table = cards[0].maketrans({'[': '', ']': '', ' ': '&nbsp;'})
+    #table = cards[0].maketrans({'[': '', ']': '', ' ': '&nbsp;'})
     table = cards[0].maketrans({'[': '', ']': ''})
     for card in cards:
         if card.startswith('!'):
             continue
-        card = card.strip().translate(table)
+        #card = card.strip().translate(table)
         front, *back = card.split('\n', 1)
+        front = front.strip().translate(table)
         if back == []:
             continue
         back = back[0].strip()
